@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  api-sp4:
+    container_name: entrega_sp4
+    image: node:16
+    build: .
+    ports:
+      - 8080:8080
+    depends_on:
+      - db-sp4
+    environment:
+      - DB_USER=pedro
+      - DB_PASSWORD=0907
+      - DB=product_categories
+      - DB_HOST=localhost
+      - DB_PORT=5432
+  db-sp4:
+    container_name: db_entrega_sp4
+    image: postgres:12
+    ports:
+      - 5431:5432
+    environment:
+      - POSTGRES_USER=pedro
+      - POSTGRES_PASSWORD=0907
+      - POSTGRES_DB=product_categories
+    volumes:
+      - ./create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
