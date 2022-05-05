@@ -10,6 +10,13 @@ export default class ProductsController {
   static async createNew(req, res) {
     const id = uuidv4();
     const { name, price, category_id } = req.body;
+
+    if (!name || !price) {
+      return res
+        .status(400)
+        .json({ message: "Cannot create product without name and price" });
+    }
+
     try {
       const newProduct = await createProductService(
         id,
@@ -22,7 +29,7 @@ export default class ProductsController {
         .status(201)
         .json({ message: "Product created", product: newProduct });
     } catch (err) {
-      return res.status(400).json(err.message);
+      return res.status(400).json({ message: err.message });
     }
   }
 
@@ -32,18 +39,19 @@ export default class ProductsController {
 
       return res.status(200).json(everyProduct);
     } catch (err) {
-      return res.status(400).json(err.message);
+      return res.status(400).json({ message: err.message });
     }
   }
 
   static async listOne(req, res) {
     const { id } = req.params;
+
     try {
       const oneProduct = await listOneProductService(id);
 
       return res.status(200).json(oneProduct);
     } catch (err) {
-      return res.status(400).json(err.message);
+      return res.status(400).json({ message: err.message });
     }
   }
   static async delete(req, res) {
@@ -55,7 +63,7 @@ export default class ProductsController {
         .status(200)
         .json({ message: "Product deleted", product: deletedProduct });
     } catch (err) {
-      return res.status(400).json(err.message);
+      return res.status(400).json({ message: err.message });
     }
   }
 
@@ -80,7 +88,7 @@ export default class ProductsController {
         .status(200)
         .json({ message: "Product updated", product: updatedProduct });
     } catch (err) {
-      return res.status(400).json(err.message);
+      return res.status(400).json({ message: err.message });
     }
   }
 }

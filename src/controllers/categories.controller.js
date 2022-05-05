@@ -4,16 +4,16 @@ import listOneCategoryService from "../services/category/listOneCategory.service
 import updateCategoryService from "../services/category/updateCategories.service";
 import deleteCategoryService from "../services/category/deleteCategory.service";
 
-class CategoriesController {
+export default class CategoriesController {
   static async createNew(req, res) {
     const { name } = req.body;
     try {
-      const newCategorie = await createCategoryService({ name });
+      const newCategory = await createCategoryService({ name });
       return res
         .status(201)
-        .json({ message: "Category created", category: newCategorie });
+        .json({ message: "Category created", category: newCategory });
     } catch (err) {
-      return res.status(400).json(err.message);
+      return res.status(400).json({ message: err.message });
     }
   }
   static async listAll(req, res) {
@@ -22,7 +22,7 @@ class CategoriesController {
 
       return res.status(200).json(everyCategory);
     } catch (err) {
-      return res.status(400).json(err.message);
+      return res.status(400).json({ message: err.message });
     }
   }
 
@@ -33,7 +33,7 @@ class CategoriesController {
 
       return res.status(200).json(category);
     } catch (err) {
-      return res.status(400).json(err.message);
+      return res.status(400).json({ message: err.message });
     }
   }
 
@@ -46,7 +46,7 @@ class CategoriesController {
         .status(200)
         .json({ message: "Category updated", category: updatedCategory });
     } catch (err) {
-      return res.status(400).json(err.message);
+      return res.status(400).json({ message: err.message });
     }
   }
 
@@ -58,9 +58,7 @@ class CategoriesController {
         .status(200)
         .json({ message: "Category deleted", category: deletedCategory });
     } catch (err) {
-      return res.status(400).json(err.message);
+      return res.status(400).json({ message: err.message });
     }
   }
 }
-
-export default CategoriesController;

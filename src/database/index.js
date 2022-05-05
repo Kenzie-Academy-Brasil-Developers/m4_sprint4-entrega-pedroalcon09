@@ -18,8 +18,8 @@ const database = new Client(
       }
 );
 
-export const startDatabase = async () => {
+export async function startDatabase() {
   await database.connect();
-};
+}
 
 export default database;
